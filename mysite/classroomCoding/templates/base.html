@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <title> {% block title %} {% endblock %} | Portraits of Stuy </title>
+    {% endblock %}
+  </head>
+
+  <body>
+      <br>
+      <br>
+    {% block content %}
+    {% endblock %}
+    {% block footer %}
+    <br><hr>
+    <em>Made by Jerry Ye.</em>
+    <a href="/">Back to index</a>
+    {% endblock %}
+  </body>
+</html>
