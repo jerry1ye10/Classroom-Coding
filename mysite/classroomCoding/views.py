@@ -16,6 +16,21 @@ def logOut(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+def createClass(request):
+    if request.user.is_authenticated and request.user.is_teacher:
+        return render(request, "createClass.html")
+    else:
+        return HttpResponseRedirect("/")
+
+def makeClass(request):
+    if request.user.is_authenticated and request.user.is_teacher:
+        name = request.POST['name']
+        u = request.user
+        c = models.Class(name=name, teacher=u)
+        c.save()
+        return HttpResponseRedirect("/")
+    else:
+        return HttpResponseRedirect("/")
 
 def createUser(request):
     '''This function receives requests about the user's username and password from the signup form and creates users by connecting and adding to the sqlite3 database. If the registration is successful, the sign up page will redirect to the login page. Otherwise, errors will flash on the signup page.'''
