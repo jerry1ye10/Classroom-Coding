@@ -3,13 +3,13 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
-
+    #is_teacher = forms.BooleanField(label = "is_teacher")
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        exclude = ()
 
 class CustomUserChangeForm(UserChangeForm):
-
+    #is_teacher = forms.BooleanField(label="is_teacher")
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        exclude = ()
