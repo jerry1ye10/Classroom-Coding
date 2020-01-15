@@ -7,10 +7,42 @@ from . import models
 def index(request):
     '''This function renders the login page'''
     if request.user.is_authenticated:
-        email = request.user.email
-        return render(request, "index.html", {'user': email})
+        if request.user.is_teacher:
+            classes = models.Class.objects.filter(teacher=request.user)
+            classNames = []
+            for c in classes:
+                classNames.append(c.name)
+            email = request.user.email
+            return render(request, "teacherIndex.html", {'user': email, 'classes': classNames})
+        else:
+            email = request.user.email
+            classstudents = models.ClassStudent.objects.filter(student=request.user)
+            classes = []
+            for clas in classstudents:
+                classes.append(clas.c)
+            classNames = []
+            for c in classes:
+                classNames.append(c.name)
+
+            return render(request, "index.html", {'user': email, 'classes': classNames})
     else:
         return render(request, "login.html")
+
+def addClass(request):
+    if request.user.is_authenticated and request.user.is_teacher is False :
+        return render(request, "addClass.html")
+    else:
+        return HttpResponseRedirect("/")
+
+def add(request):
+    if request.user.is_authenticated and request.user.is_teacher is False :
+        className = request.POST['name']
+        c = models.Class.objects.filter(name = className)[0]
+        cs = models.ClassStudent(student=request.user,c=c)
+        cs.save()
+        return HttpResponseRedirect("/")
+    else:
+        return HttpResponseRedirect("/")
 
 def logOut(request):
     logout(request)

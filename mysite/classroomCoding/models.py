@@ -15,6 +15,10 @@ class Question(models.Model):
     type = models.CharField(max_length=50)
     question = models.TextField()
 
+class ClassStudent(models.Model):
+    student =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    c = models.ForeignKey(Class, on_delete=models.CASCADE)
+
 
 
 

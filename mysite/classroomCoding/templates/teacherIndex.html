@@ -6,8 +6,10 @@ Home Page
 
 {% block content %}
     Hi {{ user }}
-{{classes}}
-    <a href="/addclass">Add Class </a>
+{% for class in classes %}
+    {{class}}
+{% endfor %}
+    <a href="/createclass">Create Class </a>
   <a href="/logout">Logout</a>
   <br>
 {% endblock %}
