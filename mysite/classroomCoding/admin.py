@@ -14,7 +14,7 @@ class CustomUserAdmin(UserAdmin):
     )
     list_display = ['email', 'username', 'is_teacher',]
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin) #admin.site.register() registers the specific model onto the admin; as practice, try commenting one of these lines out and see how it affects the admin 
 admin.site.register(Question)
 admin.site.register(Class)
 admin.site.register(ClassStudent)
