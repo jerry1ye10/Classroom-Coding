@@ -13,7 +13,7 @@ def index(request):
             for c in classes:
                 classNames.append(c.name)
             email = request.user.email
-            return render(request, "teacherIndex.html", {'user': email, 'classes': classNames})
+            return render(request, "teacherIndex.html", {'user': email, 'classes': classes})
         else:
             email = request.user.email
             classstudents = models.ClassStudent.objects.filter(student=request.user)
@@ -35,7 +35,7 @@ def addClass(request):
         return HttpResponseRedirect("/")
 
 def add(request):
-    if request.user.is_authenticated and request.user.is_teacher is False :
+    if request.user.is_authenticated and (request.user.is_teacher is False) :
         className = request.POST['name']
         c = models.Class.objects.filter(name = className)[0]
         cs = models.ClassStudent(student=request.user,c=c)
@@ -80,7 +80,10 @@ def createUser(request):
     else:
         return HttpResponseRedirect("/")
 def signUp(request):
-    return render(request, "signup.html")
+    if request.user.is_authenticated is False:
+        return render(request, "signup.html")
+    else:
+        return HttpResponseRedirect("/")
 
 def auth(request):
     username = request.POST['username']
@@ -92,3 +95,17 @@ def auth(request):
     else:
         return HttpResponseRedirect("/")
 
+def askQuestion(request,classID):
+    if request.user.is_authenticated and request.user.is_teacher:
+        c = models.Class.objects.get(pk=classID)
+        return render(request, "askquestion.html", {'class':c})
+    return HttpResponseRedirect("/")
+
+def createQuestion(request, classID):
+    if request.user.is_authenticated and request.user.is_teacher:
+        c = models.Class.objects.get(pk=classID)
+        text = request.POST['questionText']
+        type = "Hello"
+        q = models.Question(classs=c,type=type,question=text)
+        q.save()
+    return HttpResponseRedirect("/")

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+Ask Question
+{% endblock %}
+
+{% block content %}
+  <h1> Ask a question!</h1>
+  <form action="createquestion" method="POST">{% csrf_token %}
+    Question: <input type="text" name="questionText"> <br><br>
+    <input type="submit" name="submit">
+  </form>
+  <br>
+{% endblock %}

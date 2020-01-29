@@ -7,7 +7,7 @@ Home Page
 {% block content %}
     Hi {{ user }}
 {% for class in classes %}
-    {{class}}
+    <a href="{{class.id}}/askquestion">{{class.name}} </a>
 {% endfor %}
     <a href="/createclass">Create Class </a>
   <a href="/logout">Logout</a>
